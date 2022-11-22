@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showGraph() {
-    Map<String, double> dataMap = new Map();
+    Map<String, double> dataMap = Map();
     bands.forEach((band) {
       dataMap.putIfAbsent(band.name.toString(), () => band.votes!.toDouble());
     });
@@ -190,32 +190,36 @@ class _HomePageState extends State<HomePage> {
     return SizedBox(
       width: double.infinity,
       height: 200,
-      child: PieChart(
-        dataMap: dataMap,
-        animationDuration: const Duration(milliseconds: 800),
-        chartLegendSpacing: 32,
-        chartRadius: MediaQuery.of(context).size.width / 3.2,
-        colorList: colorList,
-        initialAngleInDegree: 0,
-        chartType: ChartType.disc,
-        ringStrokeWidth: 32,
-        centerText: 'Bandas',
-        legendOptions: const LegendOptions(
-          showLegendsInRow: false,
-          legendPosition: LegendPosition.right,
-          showLegends: true,
-          legendShape: BoxShape.circle,
-          legendTextStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        chartValuesOptions: const ChartValuesOptions(
-          showChartValueBackground: true,
-          showChartValues: true,
-          showChartValuesInPercentage: false,
-          showChartValuesOutside: false,
-        ),
-      ),
+      child: dataMap.isNotEmpty
+          ? PieChart(
+              dataMap: dataMap,
+              animationDuration: const Duration(milliseconds: 800),
+              chartLegendSpacing: 32,
+              chartRadius: MediaQuery.of(context).size.width / 3.2,
+              colorList: colorList,
+              initialAngleInDegree: 0,
+              chartType: ChartType.disc,
+              ringStrokeWidth: 32,
+              centerText: 'BAND NAMES',
+              legendOptions: const LegendOptions(
+                showLegendsInRow: false,
+                legendPosition: LegendPosition.right,
+                showLegends: true,
+                legendShape: BoxShape.circle,
+                legendTextStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              chartValuesOptions: const ChartValuesOptions(
+                showChartValueBackground: true,
+                showChartValues: true,
+                showChartValuesInPercentage: false,
+                showChartValuesOutside: false,
+              ),
+            )
+          : const Center(
+              child: Text('No hay datos'),
+            ),
     );
   }
 }
